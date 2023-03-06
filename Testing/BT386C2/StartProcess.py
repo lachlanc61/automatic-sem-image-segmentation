@@ -18,6 +18,7 @@ print("done")
 ROOT_DIR= os.path.dirname(os.path.realpath(__file__))                       # Root Directory for process
 INPUT_DIR_MASKS = os.path.join(ROOT_DIR, 'Input_Masks')                     # Directory with exemplary masks of single particles
 INPUT_DIR_IMAGES = os.path.join(ROOT_DIR, 'Input_Images')                   # Directory with the real images that should be segmented
+INPUT_DIR_BG = os.path.join(ROOT_DIR, 'Input_Backgrounds')
 OUTPUT_DIR_CYCLEGAN = os.path.join(ROOT_DIR, 'Output_Masks_CycleGAN')       # Output directory for the image segmentations produced by CycleGAN
 OUTPUT_DIR_UNET = os.path.join(ROOT_DIR, 'Output_Masks_UNet')               # Output directory for the image segmentations produced by UNet
 TILE_SIZE_W = 384                                                           # Tile width (images will be tiled since training on the full image is usually not possible due to GPU memory limitations)
@@ -51,8 +52,10 @@ use_gpu_for_inference = not RUN_INFERENCE_ON_WHOLE_IMAGE or (USE_GPU_FOR_WHOLE_I
 def start_step_0():
     print('Step0: Configuring Devices, Initializing Directories, and Preparing Images...')
     HelperFunctions.initialize_directories(root_dir=ROOT_DIR, output_dir_cyclegan=OUTPUT_DIR_CYCLEGAN, output_dir_unet=OUTPUT_DIR_UNET)
-    HelperFunctions.prepare_images_cycle_gan(root_dir=ROOT_DIR, input_dir_images=INPUT_DIR_IMAGES, tile_size_w=TILE_SIZE_W, tile_size_h=TILE_SIZE_H, num_simulated_masks=NUM_SIMULATED_MASKS)
+    bg_meantop=HelperFunctions.get_background_level(input_dir_bg=INPUT_DIR_BG)
+    HelperFunctions.prepare_images_cycle_gan(root_dir=ROOT_DIR, input_dir_images=INPUT_DIR_IMAGES, tile_size_w=TILE_SIZE_W, tile_size_h=TILE_SIZE_H, num_simulated_masks=NUM_SIMULATED_MASKS, bg_meantop=bg_meantop)
 
+    exit()
 
 def start_step_1():
     print('Step 1: Training WGAN...')
