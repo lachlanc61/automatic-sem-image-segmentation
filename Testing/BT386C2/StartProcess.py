@@ -67,6 +67,7 @@ def start_step_2():
     print('Step 2: Simulating fake masks...')
     num_masks = max(NUM_SIMULATED_MASKS, len(os.listdir(os.path.join(ROOT_DIR, '2_CycleGAN', 'data', 'trainA'))))
     w_gan = WassersteinGAN.WGAN(root_dir=ROOT_DIR, allow_memory_growth=ALLOW_MEMORY_GROWTH, use_gpus_no=USE_GPUS_NO)
+        #new WGAN instance -> on simulate_masks, will load prior model from designated directory...
     w_gan.n_z = 128                                         # Noise vector size
     w_gan.simulate_masks(no_of_images=num_masks,            # No of fake masks to simulate
                          min_no_of_particles=100,           # Minimum number of particles per image tile (does not take overlaps into account)

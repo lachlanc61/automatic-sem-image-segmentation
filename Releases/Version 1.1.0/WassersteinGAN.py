@@ -16,6 +16,10 @@ from scipy import ndimage
 import HelperFunctions
 
 
+tf.config.set_visible_devices([], 'GPU')
+
+exit()
+
 class WGAN_GP(tf.keras.Model):
     def __init__(
             self,

@@ -7,6 +7,13 @@ import CycleGAN
 import UNet_Segmentation
 import HelperFunctions
 
+import tensorflow as tf
+
+
+tf.config.set_visible_devices([], 'GPU')
+
+exit()
+
 # General Setup
 ROOT_DIR = os.path.abspath("./")                                            # Root Directory for process
 INPUT_DIR_MASKS = os.path.join(ROOT_DIR, 'Input_Masks')                     # Directory with exemplary masks of single particles
