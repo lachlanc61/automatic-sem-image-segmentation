@@ -37,7 +37,7 @@ CYCLEGAN_BATCH_SIZE = 2                                                     # Ba
 CYCLEGAN_EPOCHS = 50                                                        # Number of training epochs for CycleGAN
 UNET_BATCH_SIZE = 2                                                         # Batch size used during UNet training
 UNET_EPOCHS = 50                                                            # Number of training epochs for UNet
-UNET_CONTRAST_OPTIMIZATION_RANGE = (1, 99)                                  # Remove "hot" and "cold" pixels by normalizing the contrast range to lie between the two specified percentiles
+UNET_CONTRAST_OPTIMIZATION_RANGE = (0.1, 99.9)                                  # Remove "hot" and "cold" pixels by normalizing the contrast range to lie between the two specified percentiles
 UNET_FILTERS = 16                                                           # Number of filters in the first UNet layer
 USE_DATALOADER = False                                                      # Use a dataloader for training CycleGAN and UNet (enable for very large training sets that cannot be loaded into available CPU memory at once)
 
@@ -59,11 +59,11 @@ def start_step_0():
     
     #if example backgrounds are included, use them, otherwise use BG_DEFAULT
     if os.path.isdir(INPUT_DIR_BG) and not os.listdir(INPUT_DIR_BG) == [] :
-        bg_meantop=HelperFunctions.get_background_level(input_dir_bg=INPUT_DIR_BG)
+        bg_threshold=HelperFunctions.get_background_level(input_dir_bg=INPUT_DIR_BG)
     else:
-        bg_meantop=BG_DEFAULT
+        bg_threshold=BG_DEFAULT
 
-    HelperFunctions.prepare_images_cycle_gan(root_dir=ROOT_DIR, input_dir_images=INPUT_DIR_IMAGES, tile_size_w=TILE_SIZE_W, tile_size_h=TILE_SIZE_H, num_simulated_masks=NUM_SIMULATED_MASKS, bg_meantop=bg_meantop)
+    HelperFunctions.prepare_images_cycle_gan(root_dir=ROOT_DIR, input_dir_images=INPUT_DIR_IMAGES, tile_size_w=TILE_SIZE_W, tile_size_h=TILE_SIZE_H, num_simulated_masks=NUM_SIMULATED_MASKS, bg_threshold=bg_threshold)
 
 def start_step_1():
     print('Step 1: Training WGAN...')
@@ -171,7 +171,6 @@ if __name__ == '__main__':
     print(f'Start: {datetime.now()}')
 
     """
-    """    
     # Step 0: Configuration and setup
     mp.set_start_method('spawn')
     p0 = mp.Process(target=start_step_0())
@@ -198,6 +197,8 @@ if __name__ == '__main__':
     p4.start()
     p4.join()
 
+    """ 
+
     # Step 5: Filter artifact particles
     p5 = mp.Process(target=start_step_5())
     p5.start()
@@ -207,7 +208,7 @@ if __name__ == '__main__':
     p6a = mp.Process(target=start_step_6a())
     p6a.start()
     p6a.join()
-
+ 
     
     p6b = mp.Process(target=start_step_6b())
     p6b.start()

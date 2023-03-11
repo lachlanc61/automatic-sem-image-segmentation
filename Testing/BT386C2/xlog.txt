@@ -1,0 +1,51 @@
+
+
+
+PROBLEM:
+    consistently assigning background noise as particles
+
+
+    in UNet_Seg
+
+    eg. 0045 = image #3
+
+    run_inference
+        :283 load and preproc
+            applies norm, threshold, contrast opt
+
+        :295 preprocessed image to pass to unet
+            eg. 0045 exposure dialled up significantly
+            -> hot and cold?
+        
+        :302 output of unet
+            -> produces an image? thought it was a segmentation mask...
+            -> picks up lots of background
+
+
+
+    helperfuncs
+        load_and_preprocess_images
+
+    UNET_CONTRAST_OPT_RANGE is percentiles - normalises between eg. 1% and 99% (ie. hotter=white, darker=black)
+        
+        currently using quite a broad definition, accentuates noise heavily
+
+
+    >>>USE WIDER RANGE OF PERCENTILES to prevent amplification of noise
+        = 0.1, 99.9
+    >>>DONE
+
+
+    >>> adjust assemblies from WGAN to better match images 
+        - real images are much more clustered than fake assemblies
+    in WGAN.simulate_masks
+
+
+
+    >>> adjust filter_gan_masks to more aggressively discard particles that are just noise
+    in helperfuncs.filter_gan_masks    
+
+
+
+
+

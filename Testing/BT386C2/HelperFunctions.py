@@ -228,7 +228,7 @@ def initialize_directories(root_dir, output_dir_cyclegan, output_dir_unet):
 
 
 
-def patch_meantop(patch):
+def patch_highthreshold(patch):
     """
     calculates mean of highest 0.1% of pixels in a patch
     useful for detecting if a particle is present
@@ -249,10 +249,10 @@ def get_background_level(input_dir_bg):
     bg_imgs = load_and_preprocess_images(input_dir_or_filelist=input_dir_bg, normalization_range=None, output_channels=1)
     meantop = 0
     for i, bg_img in enumerate(bg_imgs):
-        meantop += patch_meantop(bg_img)
+        meantop += patch_highthreshold(bg_img)
     return float(meantop/(i+1))
 
-def prepare_images_cycle_gan(root_dir, input_dir_images, tile_size_w=384, tile_size_h=384, num_simulated_masks=1000, bg_meantop=120):
+def prepare_images_cycle_gan(root_dir, input_dir_images, tile_size_w=384, tile_size_h=384, num_simulated_masks=1000, bg_threshold=120):
     # Tile SEM Images to correct Size
     input_imgs = load_and_preprocess_images(input_dir_or_filelist=input_dir_images, normalization_range=None, output_channels=1)
     filenames = get_image_file_paths_from_directory(input_dir_images)
@@ -262,7 +262,7 @@ def prepare_images_cycle_gan(root_dir, input_dir_images, tile_size_w=384, tile_s
         for j, img_tile in enumerate(img_tiles):
             # Filter out tiles that show mainly background for training
             #if np.mean(img_tile) >= 1.1 * np.mean(input_img):
-            if patch_meantop(img_tile) >= bg_meantop*1.1:
+            if patch_highthreshold(img_tile) >= bg_threshold*1.1:
                 ext = os.path.splitext(f)[-1]
                 Image.fromarray(img_tile[:, :, 0]).save(os.path.join(root_dir, '2_CycleGAN', 'data', 'trainA', f.replace(ext, f'-{j}{ext}')))
 

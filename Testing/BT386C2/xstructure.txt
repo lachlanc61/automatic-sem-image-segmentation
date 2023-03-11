@@ -1,0 +1,87 @@
+STRUCTURE:
+	s0	setup directories
+			generates patches for training cyclegan via HelperFunctions.prepare_images_cycle_gan
+
+		in	input_images
+
+		out	2/data/trainA	- real patches containing particles
+
+	s1	train WGAN
+			trains WGAN to generate single-particle masks similar to input masks
+
+		in 	input_masks
+
+		out	WGAN model
+
+
+	s2	run wgan to generate fake masks
+			uses WGAN to generate single masks
+			THEN use rules-based sim to assemble masks into images
+	
+		in: 	wgan model, big pile of params
+
+		out:	2_CycleGAN/data/trainB	- fake assemblies of masks
+
+
+	s3	train cyclegan
+			trains cyclegan to generate "real-looking" images from WGAN-generated segmentation masks
+
+		in	2/data/trainA	- real patches containing particles
+			2/data/trainB	- fake assemblies of masks
+
+		out	
+			CycleGAN model			
+
+
+I	s4a	run cyclegan to generate fake images
+		 	basically takes wgan mask assemblies and turns them into fake SEM images, creating mask/image pairs for training Unet
+
+		in	2/data/trainB		- original wgan assemblies
+
+		out	2/generate_images/A	- fake SEM images from wgan assemblies
+
+
+	s4b	run cyclegan to segment real images
+			use cyclegan to attempt segmentation of real images 
+
+		in	input_images	- real images
+
+		out	2/generate/B	- cgan segmentation of real images
+
+
+	s5a	filter cyclegan outputs
+			look at assemblies+generated images and remove masks that have obviously not lead to a good particle
+		in:
+			2/generate_images/A	-	fake images from cgan+wgan
+			2/data/trainB		-	original wgan assemblies
+		out:
+			2/generate/Synthetic	- 	final WGAN masks, filtered to fake image 
+			
+
+	s5b	filter cyclegan segmentation outputs
+			use similar rules to strip back cyclegan segmentation of real images
+		in:
+			input_images	- real images
+			2/generate/B	- cgan segmentation of real images
+		out:
+			Output_masks_cyclegan	- segmentation via cyclegan
+
+	s6a	train Unet
+			use mask assembly + fake image pairs to train unet to detect particles
+		in:
+			2/generate_images/A	- fake images 
+			2/generate/Synthetic	- filtered masks used to generate images
+
+		out:
+			UNet model
+	
+
+	s6b	run Unet to segment real images
+		in:
+			input_images
+		out:
+			Output_masks_unet	- segmentation via unet
+
+
+
+
