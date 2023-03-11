@@ -49,3 +49,19 @@ PROBLEM:
 
 
 
+
+
+
+grid image at (average size of input mask)/4
+
+get mean intensity for each grid square
+
+lowerbound = mean of bottom 20% squares
+
+for each mask
+    get mean intensity 
+    if < lowerbound*1.5
+    remove mask
+
+
+

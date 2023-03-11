@@ -35,6 +35,7 @@ class Measure(object):
         # threshold and watershed (needed by cv2.findContours())
         if len(img.shape) != 2:
             self.image = cv2.cvtColor(src=img.copy(), code=cv2.COLOR_BGR2GRAY).copy()
+        #if any values where 0<val<255
         if np.any((img > 1) & (img < 255)) or np.all((img >= 0) & (img <= 1)):
             self.image = Measure.segment(img, threshold=threshold, darkBackground=darkBackground,
                                       applyWatershed=applyWatershed)

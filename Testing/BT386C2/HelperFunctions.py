@@ -159,16 +159,34 @@ def segment(image, threshold, watershed_lines, min_distance=9, use_four_connecti
 
 
 def filter_gan_masks(img_path, msk_path, out_path, threshold_method=threshold_li, do_watershed_and_four_connectivity=True):
+    BW=20       #border width to mask off - contours
+    BG_MULT=1.5
+
     for f in tqdm(os.listdir(img_path)):
         img = np.asarray(Image.open(os.path.join(img_path, f)), dtype='uint8')
         mask = np.asarray(Image.open(os.path.join(msk_path, f)), dtype='uint8')
         if do_watershed_and_four_connectivity:
             mask = segment(image=mask, threshold=-1, watershed_lines=True, use_four_connectivity=True)
+        #initialise measurement object -> generates contours for each particle
+        #   len(m.contours) = no. particles
         m = Measure(mask, darkBackground=True, applyWatershed=False, excludeEdges=False, grayscaleImage=img)
+        #   m.meanIntensities = list w/ meanInt for each particle
         m.calculateMeanIntensities()
+           
         m.filterResults('meanIntensity', threshold_method(img))
 
         contours = np.zeros(img.shape, dtype='uint8')
+        cv2.drawContours(image=contours, contours=m.contours, contourIdx=-1, color=(255, 255, 255), thickness=-1)
+
+        #re-threshold using multiple of background
+        grow_kernel=np.ones((6, 6), dtype='uint8')
+        grow_contours=cv2.dilate(contours, grow_kernel)
+        bg_pixels = ((grow_contours < 255)*img)[BW:-BW,BW:-BW]
+        bg_threshold=np.mean(bg_pixels[bg_pixels>0])
+
+        #re-contour using new threshold
+        contours = np.zeros(img.shape, dtype='uint8')
+        m.filterResults('meanIntensity', bg_threshold*BG_MULT)
         cv2.drawContours(image=contours, contours=m.contours, contourIdx=-1, color=(255, 255, 255), thickness=-1)
 
         Image.fromarray(contours).save(os.path.join(out_path, f))
