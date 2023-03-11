@@ -44,6 +44,9 @@ PROBLEM:
 
     >>> adjust filter_gan_masks to more aggressively discard particles that are just noise
     in helperfuncs.filter_gan_masks    
+    >>>DONE
+        average all areas of image that do not have particles
+        repeat thresholding using background_average*1.25
 
 
 
@@ -51,17 +54,6 @@ PROBLEM:
 
 
 
+adjust gan_filter to use additional filtering layer based on background level
 
-grid image at (average size of input mask)/4
-
-get mean intensity for each grid square
-
-lowerbound = mean of bottom 20% squares
-
-for each mask
-    get mean intensity 
-    if < lowerbound*1.5
-    remove mask
-
-
-
+look at 0033, 0034 - losing real particles here, doesnt seem to be threshold, though

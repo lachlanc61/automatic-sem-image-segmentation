@@ -160,7 +160,7 @@ def segment(image, threshold, watershed_lines, min_distance=9, use_four_connecti
 
 def filter_gan_masks(img_path, msk_path, out_path, threshold_method=threshold_li, do_watershed_and_four_connectivity=True):
     BW=20       #border width to mask off - contours
-    BG_MULT=1.5
+    BG_MULT=1.25
 
     for f in tqdm(os.listdir(img_path)):
         img = np.asarray(Image.open(os.path.join(img_path, f)), dtype='uint8')
