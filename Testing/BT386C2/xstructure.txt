@@ -80,7 +80,9 @@ I	s4a	run cyclegan to generate fake images
 		in:
 			input_images
 		out:
-			Output_masks_unet	- segmentation via unet
+			Output_masks_unet/*_raw.tif	- predictions via unet
+			Output_masks_unet/*.tif		- thresholded segmentations
+
 
 
 
