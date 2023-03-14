@@ -8,8 +8,8 @@ import cv2
 from PIL import Image
 from tqdm import tqdm
 
-import Measurements
-from Measurements import Measure
+import auto_sem_segmentation.Measurements as Measurements
+from auto_sem_segmentation.Measurements import Measure
 
 
 def tile_image(img, tile_size_w, tile_size_h, min_overlap=2, normalization_range=None, normalize_tiles_individually=True):
@@ -245,7 +245,6 @@ def initialize_directories(root_dir, output_dir_cyclegan, output_dir_unet):
         os.mkdir(output_dir_unet)
 
 
-
 def patch_highthreshold(patch):
     """
     calculates mean of highest 0.1% of pixels in a patch
@@ -271,6 +270,7 @@ def get_background_level(input_dir_bg):
     return float(meantop/(i+1))
 
 def prepare_images_cycle_gan(root_dir, input_dir_images, tile_size_w=384, tile_size_h=384, num_simulated_masks=1000, bg_threshold=120):
+    
     # Tile SEM Images to correct Size
     input_imgs = load_and_preprocess_images(input_dir_or_filelist=input_dir_images, normalization_range=None, output_channels=1)
     filenames = get_image_file_paths_from_directory(input_dir_images)
@@ -315,7 +315,7 @@ def prepare_images_cycle_gan(root_dir, input_dir_images, tile_size_w=384, tile_s
 
                 # Filter out tiles that show mainly background for training
                 #if np.mean(img_tile) >= 1.1 * np.mean(input_img):
-                if patch_meantop(img_tile) >= bg_meantop*1.1:
+                if patch_highthreshold(img_tile) >= bg_threshold*1.1:
                     Image.fromarray(img_tile[:, :, 0].astype('uint8')).save(os.path.join(root_dir, '2_CycleGAN', 'data', 'trainA', f.replace(ext, f'-aug_{i}{ext}')))
                     i += 1
                     pbar.update(1)

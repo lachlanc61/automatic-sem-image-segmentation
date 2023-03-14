@@ -8,7 +8,7 @@ import tensorflow as tf
 from tqdm import tqdm
 from PIL import Image
 
-import HelperFunctions
+import auto_sem_segmentation.HelperFunctions as HelperFunctions
 
 
 class ImageDataset:

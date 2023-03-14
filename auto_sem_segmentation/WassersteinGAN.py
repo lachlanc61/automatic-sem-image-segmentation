@@ -13,7 +13,7 @@ import cv2
 import math
 from scipy import ndimage
 
-import HelperFunctions
+import auto_sem_segmentation.HelperFunctions as HelperFunctions
 
 LIMIT_HEIGHT=112
 LIMIT_WIDTH=112

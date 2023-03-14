@@ -10,7 +10,7 @@ import tensorflow as tf
 import tensorflow_addons as tfa
 from tqdm import tqdm
 
-import HelperFunctions
+import auto_sem_segmentation.HelperFunctions as HelperFunctions
 
 
 class CycleGAN:

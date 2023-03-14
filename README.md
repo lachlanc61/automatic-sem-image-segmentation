@@ -6,7 +6,7 @@ The files and images in this repository accompany the following publication:
 
 If you use the files, data, or code in your own work, please cite the above article.
 
-![Image](./ToC.jpg "ToC")
+![Image](./docs/ToC.jpg "ToC")
 
 Folder Structure:
 -----------------
@@ -62,7 +62,7 @@ Releases:
 Examples:
 ---------
 The following images illustrate a few examples of particles consisting of different materials (Au, TiO2, BaSO4, SiO2, FeOx) and imaged with different techniques (SEM, eSEM, TEM), and their segmentation masks that were obtained automatically using the above algorithm (or slight variations thereof).
-![Image](./Examples.gif "Examples")
+![Image](./docs/Examples.gif "Examples")
 
 Licenses:
 ---------

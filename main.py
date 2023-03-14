@@ -1,11 +1,13 @@
 import os
+import sys
 from datetime import datetime
 import multiprocessing as mp
 
-import WassersteinGAN
-import CycleGAN
-import UNet_Segmentation
-import HelperFunctions
+import auto_sem_segmentation.WassersteinGAN as WassersteinGAN
+import auto_sem_segmentation.CycleGAN as CycleGAN
+import auto_sem_segmentation.UNet_Segmentation as UNet_Segmentation
+import auto_sem_segmentation.HelperFunctions as HelperFunctions
+import auto_sem_segmentation.utils as utils
 
 import tensorflow as tf
 print(tf.config.experimental.list_physical_devices('GPU'))
@@ -167,10 +169,15 @@ def start_step_6b():
                         use_gpu=use_gpu_for_inference)                       # Whether to use the GPU during inference
 #                        model='/home/lachlan/CODEBASE/SEM_segmentation/Testing/3_UNet/Models/2023-02-25_23-13-47')
 
-if __name__ == '__main__':
+
+def main(args_in):
+
     print(f'Start: {datetime.now()}')
 
-    """
+    args = utils.get_args(args_in)
+
+    ROOT_DIR=args.root_dir
+
     # Step 0: Configuration and setup
     mp.set_start_method('spawn')
     p0 = mp.Process(target=start_step_0())
@@ -197,8 +204,6 @@ if __name__ == '__main__':
     p4.start()
     p4.join()
 
-    """ 
-
     # Step 5: Filter artifact particles
     p5 = mp.Process(target=start_step_5())
     p5.start()
@@ -215,3 +220,13 @@ if __name__ == '__main__':
     p6b.join()
 
     print(f'Finished: {datetime.now()}')
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])      #NB: exclude 0 == script name
+
+    sys.exit()
+
+
+
+
