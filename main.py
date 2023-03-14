@@ -176,6 +176,7 @@ def main(args_in):
 
     args = utils.get_args(args_in)
 
+    #TO-DO: global not updated in functions, need to load into a config and pass explicitly
     ROOT_DIR=args.root_dir
 
     # Step 0: Configuration and setup
