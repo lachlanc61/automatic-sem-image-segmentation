@@ -9,7 +9,7 @@ class YamlConfig():
     """
     stores control flags and variables from config.yaml
     """    
-    def __init__(self, pkgconfig: str, args_in):
+    def __init__(self, pkgconfig: str):
         """
         initialise config from yaml file
 
