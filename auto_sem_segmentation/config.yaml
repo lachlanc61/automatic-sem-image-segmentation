@@ -1,0 +1,32 @@
+# General Setup
+
+INPUT_SUBDIR_MASKS: 'Input_Masks'                      # Directory with exemplary masks of single particles
+INPUT_SUBDIR_IMAGES: 'Input_Images'                    # Directory with the real images that should be segmented
+INPUT_SUBDIR_BG: 'Input_Backgrounds'
+OUTPUT_SUBDIR_CYCLEGAN: 'Output_Masks_CycleGAN'        # Output directory for the image segmentations produced by CycleGAN
+OUTPUT_SUBDIR_UNET: 'Output_Masks_UNet'                # Output directory for the image segmentations produced by UNet
+TILE_SIZE_W: 384                                    # Tile width (images will be tiled since training on the full image is usually not possible due to GPU memory limitations)
+TILE_SIZE_H: 384                                    # Tile height (images will be tiled since training on the full image is usually not possible due to GPU memory limitations)
+NUM_SIMULATED_MASKS: 1000                           # Minimum number of masks to simulate by WGAN (if there are more "real" images available, more masks will be synthesized, if there rae more simulated masks, real images will be augmented by applying random cropping and mirroring)
+RUN_INFERENCE_ON_WHOLE_IMAGE: True                  # Run inference on whole images instead of image tiles (can help reduce tiling artifacts)
+
+# Options for training and inference on a GPU
+USE_GPUS_NO: (0, )                                  # List of GPUs used for training (if there is more than one available)
+USE_GPU_FOR_WHOLE_IMAGE_INFERENCE: False            # If set to False, inference of whole images (as opposed to image tiles) will be done on a CPU (slower, but generally necessary due to GPU memory restrictions). Has no effect if RUN_INFERENCE_ON_WHOLE_IMAGE=False
+ALLOW_MEMORY_GROWTH: True                           # Whether to pre-allocate all memory at the beginning or allow for memory growth
+
+# Options for Training the Networks - for more options see calls to in the individual steps as well as the parameters in the constructors/methods of the files WassersteinGAN.py, CycleGAN.py, and UNet_Segmentation.py
+WGAN_BATCH_SIZE: 64                                 # Batch size used during WassersteinGAN training
+WGAN_EPOCHS: 1000                                   # Number of training epochs for WassersteinGAN
+CYCLEGAN_BATCH_SIZE: 2                              # Batch size used during CycleGAN training
+CYCLEGAN_EPOCHS: 50                                 # Number of training epochs for CycleGAN
+UNET_BATCH_SIZE: 2                                  # Batch size used during UNet training
+UNET_EPOCHS: 50                                     # Number of training epochs for UNet
+UNET_CONTRAST_OPTIMIZATION_RANGE: (0.1, 99.9)       # Remove "hot" and "cold" pixels by normalizing the contrast range to lie between the two specified percentiles
+UNET_FILTERS: 16                                    # Number of filters in the first UNet layer
+USE_DATALOADER: False                               # Use a dataloader for training CycleGAN and UNet (enable for very large training sets that cannot be loaded into available CPU memory at once)
+
+# DEFAULTS
+BG_DEFAULT: 110.0
+MIN_PARTICLES_PER_TILE: 5
+MAX_PARTICLES_PER_TILE: 100
