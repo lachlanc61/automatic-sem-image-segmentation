@@ -653,3 +653,12 @@ class Measure(object):
                     self.__removeShapeMeasurements(i)
 
         self.number = len(self.contours)
+
+
+def edgedetect_canny(img):
+    """
+    perform canny edge detection
+    """
+
+    edges = cv2.Canny(image = img, threshold1=100, threshold2=200)
+    return edges
