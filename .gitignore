@@ -1,13 +1,8 @@
-Testing/Example_data/
-Testing/BT386C2/*/*
-Testing/Eline_BT386C2/
-
 trial_data
 archive
 datasets
 
 notebooks/*.png
-
 
 */1_WGAN
 */2_CycleGAN
