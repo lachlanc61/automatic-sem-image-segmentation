@@ -13,6 +13,24 @@
             "justMyCode": true,
             "args": ["-d", "trial_data/Eline_BT386C2/"]
         },
+        {
+            "name": "Docker: Python: Current File",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "python": {
+                "pathMappings": [
+                  {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "/app"
+                  }
+                ],
+            },            
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-d", "trial_data/Eline_BT386C2/"]
+        },
     ]
 }
 
