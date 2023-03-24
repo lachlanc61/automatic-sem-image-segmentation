@@ -2,6 +2,9 @@ Testing/Example_data/
 Testing/BT386C2/*/*
 Testing/Eline_BT386C2/
 
+notebooks/*.png
+
+
 */1_WGAN
 */2_CycleGAN
 */3_UNet

@@ -8,8 +8,7 @@ echo $CMD
 
 docker run \
 	-it --rm --gpus=all \
-     -e LOCAL_UID=$(id -u $USER) \
-     -e LOCAL_GID=$(id -g $USER) \
+     -u $(id -u $USER):$(id -g $USER) \
 	--mount type=bind,source="$(pwd)"/"$BIND_DIR",target=/sourcedata \
 	"$IMAGENAME" \
 	"$CMD"

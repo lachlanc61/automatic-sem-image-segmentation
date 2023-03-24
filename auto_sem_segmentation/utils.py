@@ -112,7 +112,7 @@ def check_args(args):
     perform basic sanity checks on arguments
     """
     if args.root_dir == None:   
-        raise ValueError("No input file specified")
+        raise ValueError("No input directory specified")
 
     if not os.path.exists(args.root_dir):
         raise ValueError(f"Root directory {args.root_dir} not found")
@@ -125,7 +125,7 @@ def get_args(args_in):
     """
 
     argparser = argparse.ArgumentParser(
-        description="Utility to parse IXRF log file for raw deadtime statistics"
+        description=""
     )
 
     #--------------------------

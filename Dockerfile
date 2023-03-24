@@ -8,13 +8,8 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 #entrypoint dependencies
 RUN apt-get install gosu -y
 
-
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 COPY . .
 CMD [ "python", "main.py"]
