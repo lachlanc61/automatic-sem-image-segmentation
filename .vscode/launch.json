@@ -11,7 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-d", "trial_data/Eline_BT386C2/"]
+            "args": [
+                "-d",
+                "trial_data/Eline_BT386C2/"
+            ]
         },
         {
             "name": "Docker: Python: Current File",
@@ -20,17 +23,35 @@
             "preLaunchTask": "docker-run: debug",
             "python": {
                 "pathMappings": [
-                  {
-                    "localRoot": "${workspaceFolder}",
-                    "remoteRoot": "/app"
-                  }
-                ],
-            },            
+                    {
+                        "localRoot": "${workspaceFolder}",
+                        "remoteRoot": "/app"
+                    }
+                ]
+            },
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-d", "trial_data/Eline_BT386C2/"]
+            "args": [
+                "-d",
+                "trial_data/Eline_BT386C2/"
+            ]
         },
+        {
+            "name": "Docker: Python - General",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "python": {
+                "pathMappings": [
+                    {
+                        "localRoot": "${workspaceFolder}",
+                        "remoteRoot": "/app"
+                    }
+                ],
+                "projectType": "general"
+            }
+        }
     ]
 }
 
