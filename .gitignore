@@ -2,6 +2,10 @@ Testing/Example_data/
 Testing/BT386C2/*/*
 Testing/Eline_BT386C2/
 
+trial_data
+archive
+datasets
+
 notebooks/*.png
 
 
