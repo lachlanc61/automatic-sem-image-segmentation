@@ -3,7 +3,6 @@ import sys
 from datetime import datetime
 import multiprocessing as mp
 
-
 import auto_sem_segmentation.utils as utils
 import auto_sem_segmentation.steps as steps
 
