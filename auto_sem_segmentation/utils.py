@@ -25,37 +25,37 @@ class YamlConfig():
 
             cfg = yaml.safe_load(f)
 
-            self.INPUT_SUBDIR_MASKS = cfg['INPUT_SUBDIR_MASKS']
-            self.INPUT_SUBDIR_IMAGES = cfg['INPUT_SUBDIR_IMAGES']
-            self.INPUT_SUBDIR_BG = cfg['INPUT_SUBDIR_BG']
+            self.INPUT_SUBDIR_MASKS = str(cfg['INPUT_SUBDIR_MASKS'])
+            self.INPUT_SUBDIR_IMAGES = str(cfg['INPUT_SUBDIR_IMAGES'])
+            self.INPUT_SUBDIR_BG = str(cfg['INPUT_SUBDIR_BG'])
 
-            self.OUTPUT_SUBDIR_CYCLEGAN = cfg['OUTPUT_SUBDIR_CYCLEGAN']
-            self.OUTPUT_SUBDIR_UNET = cfg['OUTPUT_SUBDIR_UNET']
-            self.TILE_SIZE_W = cfg['TILE_SIZE_W'] 
-            self.TILE_SIZE_H = cfg['TILE_SIZE_H']
-            self.NUM_SIMULATED_MASKS = cfg['NUM_SIMULATED_MASKS']
-            self.RUN_INFERENCE_ON_WHOLE_IMAGE = cfg['RUN_INFERENCE_ON_WHOLE_IMAGE']
+            self.OUTPUT_SUBDIR_CYCLEGAN = str(cfg['OUTPUT_SUBDIR_CYCLEGAN'])
+            self.OUTPUT_SUBDIR_UNET = str(cfg['OUTPUT_SUBDIR_UNET'])
+            self.TILE_SIZE_W = int(cfg['TILE_SIZE_W'])
+            self.TILE_SIZE_H = int(cfg['TILE_SIZE_H'])
+            self.NUM_SIMULATED_MASKS = int(cfg['NUM_SIMULATED_MASKS'])
+            self.RUN_INFERENCE_ON_WHOLE_IMAGE = bool(cfg['RUN_INFERENCE_ON_WHOLE_IMAGE'])
 
             # Options for training and inference on a GPU
             self.USE_GPUS_NO = cfg['USE_GPUS_NO']      
-            self.USE_GPU_FOR_WHOLE_IMAGE_INFERENCE = cfg['USE_GPU_FOR_WHOLE_IMAGE_INFERENCE']        
-            self.ALLOW_MEMORY_GROWTH = cfg['ALLOW_MEMORY_GROWTH']                          
+            self.USE_GPU_FOR_WHOLE_IMAGE_INFERENCE = bool(cfg['USE_GPU_FOR_WHOLE_IMAGE_INFERENCE'])
+            self.ALLOW_MEMORY_GROWTH = bool(cfg['ALLOW_MEMORY_GROWTH'])
 
             # Options for Training the Networks
-            self.WGAN_BATCH_SIZE = cfg['WGAN_BATCH_SIZE']                               
-            self.WGAN_EPOCHS = cfg['WGAN_EPOCHS']                                  
-            self.CYCLEGAN_BATCH_SIZE = cfg['CYCLEGAN_BATCH_SIZE']                            
-            self.CYCLEGAN_EPOCHS = cfg['CYCLEGAN_EPOCHS']                               
-            self.UNET_BATCH_SIZE = cfg['UNET_BATCH_SIZE']                               
-            self.UNET_EPOCHS = cfg['UNET_EPOCHS']                                 
-            self.UNET_CONTRAST_OPTIMIZATION_RANGE = cfg['UNET_CONTRAST_OPTIMIZATION_RANGE']      
-            self.UNET_FILTERS = cfg['UNET_FILTERS']                                   
-            self.USE_DATALOADER = cfg['USE_DATALOADER']                              
+            self.WGAN_BATCH_SIZE = int(cfg['WGAN_BATCH_SIZE'])
+            self.WGAN_EPOCHS = int(cfg['WGAN_EPOCHS'])
+            self.CYCLEGAN_BATCH_SIZE = int(cfg['CYCLEGAN_BATCH_SIZE'])
+            self.CYCLEGAN_EPOCHS = int(cfg['CYCLEGAN_EPOCHS'])
+            self.UNET_BATCH_SIZE = int(cfg['UNET_BATCH_SIZE'])
+            self.UNET_EPOCHS = int(cfg['UNET_EPOCHS'])
+            self.UNET_CONTRAST_OPTIMIZATION_RANGE = cfg['UNET_CONTRAST_OPTIMIZATION_RANGE']
+            self.UNET_FILTERS = int(cfg['UNET_FILTERS'])
+            self.USE_DATALOADER = bool(cfg['USE_DATALOADER'])
 
             # DEFAULTS
-            self.BG_DEFAULT = cfg['BG_DEFAULT']
-            self.MIN_PARTICLES_PER_TILE = cfg['MIN_PARTICLES_PER_TILE']
-            self.MAX_PARTICLES_PER_TILE = cfg['MAX_PARTICLES_PER_TILE']
+            self.BG_DEFAULT = float(cfg['BG_DEFAULT'])
+            self.MIN_PARTICLES_PER_TILE = int(cfg['MIN_PARTICLES_PER_TILE'])
+            self.MAX_PARTICLES_PER_TILE = int(cfg['MAX_PARTICLES_PER_TILE'])
 
             #INIT NONE
             self.ROOT_DIR = None

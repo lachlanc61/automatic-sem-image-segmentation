@@ -34,8 +34,8 @@ def start_step_2(config):
         #new WGAN instance -> on simulate_masks, will load prior model from designated directory...
     w_gan.n_z = 128                                         # Noise vector size
     w_gan.simulate_masks(no_of_images=num_masks,            # No of fake masks to simulate
-                         min_no_of_particles=config.MIN_PARTCILES_PER_TILE,   # Minimum number of particles per image tile (does not take overlaps into account)
-                         max_no_of_particles=config.MAX_PARTCILES_PER_TILE,   # Maximum number of particles per image tile (does not take overlaps into account)
+                         min_no_of_particles=config.MIN_PARTICLES_PER_TILE,   # Minimum number of particles per image tile (does not take overlaps into account)
+                         max_no_of_particles=config.MAX_PARTICLES_PER_TILE,   # Maximum number of particles per image tile (does not take overlaps into account)
                          use_perlin_noise=True,             # Use Perlin Noise to simulate particle agglomeration/aggregation
                          perlin_noise_threshold=0.5,        # Threshold for Perlin Noise - higher values give smaller patches with more particle aggregation
                          perlin_noise_frequency=4,          # Determines the size and number of patches (higher values give more but smaller patches)

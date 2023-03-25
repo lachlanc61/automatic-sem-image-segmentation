@@ -13,6 +13,8 @@ ENV PYTHONUNBUFFERED=1
 #CV2 dependencies
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y
 
+#git
+RUN apt-get -y install git
 
 # Install pip requirements
 COPY requirements.txt .
