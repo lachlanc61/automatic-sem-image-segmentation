@@ -1,6 +1,7 @@
 trial_data
 archive
 datasets
+container_images
 
 notebooks/*.png
 
