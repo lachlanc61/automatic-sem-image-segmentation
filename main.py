@@ -1,12 +1,11 @@
 import sys
+import os
 
 from datetime import datetime
 import multiprocessing as mp
 
 import auto_sem_segmentation.utils as utils
 import auto_sem_segmentation.steps as steps
-
-import tensorflow as tf
 
 #--------------------------------------------------------------------------------
 # GLOBALS
@@ -25,7 +24,9 @@ def main(args_in):
 
     print(f'Start: {datetime.now()}')
 
-    config = utils.YamlConfig(PACKAGE_CONFIG)
+    MAINPATH=os.path.dirname(__file__)
+
+    config = utils.YamlConfig(os.path.join(MAINPATH, PACKAGE_CONFIG))
 
     args = utils.get_args(args_in)
 
